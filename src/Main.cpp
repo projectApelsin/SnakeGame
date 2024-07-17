@@ -1,10 +1,15 @@
 #include <SFML/Graphics.hpp>
+#include "Entity.h"
+#include "Snake.h"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    sf::RenderWindow window(sf::VideoMode(800, 800), "Snake Online");
+    sf::Sprite sprite;
+    sf::Texture texture;
+    texture.loadFromFile("data/apple.png");
+    Snake snake();
+  
 
     while (window.isOpen())
     {
@@ -16,7 +21,7 @@ int main()
         }
 
         window.clear();
-        window.draw(shape);
+        
         window.display();
     }
 
