@@ -23,7 +23,7 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        
+        window.clear();
         const auto& gridData = grid.getGrid();
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
@@ -32,8 +32,6 @@ int main()
                 window.draw(sprite);
             }
         }
-
-        window.clear();
         for (auto& snakeEntity : snake.getVectorSnake()) {
             window.draw(snakeEntity.get()->getSprite());
         }
