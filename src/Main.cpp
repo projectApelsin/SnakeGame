@@ -4,15 +4,18 @@
 #include <vector>
 #include "Grid.h"
 #include "Food.h"
+
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 800), "Snake Online");
     Snake snake;
+    snake.growSnake();
+    snake.growSnake();
+
     Grid grid(ROWS, COLUMNS);
-    Food food;
-    Food food1;
-    food1.setSpritePosition(sf::Vector2f(0, 0));
-    food.setSpritePosition(sf::Vector2f(0,0));
+    Food food(800,800,10);
+    
     grid.initializeGrid();
     while (window.isOpen())
     {
@@ -21,30 +24,20 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+            switch (event.type) {
+            
+            }
         }
         window.clear();
-        const auto& gridData = grid.getGrid();
-        for (int i = 0; i < ROWS; ++i) {
-            for (int j = 0; j < COLUMNS; ++j) {
-                sf::Sprite sprite = gridData[i][j]->getSprite();
-                sprite.setPosition(j * 50, i * 50); // Adjust position based on your grid cell size
-                window.draw(sprite);
-            }
-        }
-       
+        
+        grid.drawGrid(window);
         window.draw(food.getSprite());
-        window.draw(food1.getSprite());
-        for (auto& snakeEntity : snake.getVectorSnake()) {
-            if (snakeEntity && food.getSprite().getGlobalBounds().intersects(snakeEntity->getSprite().getGlobalBounds()) || snakeEntity && food1.getSprite().getGlobalBounds().intersects(snakeEntity->getSprite().getGlobalBounds())) {
-                std::cout << "Food eaten!" << std::endl;
-                snake.snakeGrow();
-                food.setSpritePosition(sf::Vector2f(-50, -50)); // Move food offscreen temporarily
-                food1.setSpritePosition(sf::Vector2f(-50, -50));
-            }
-            if (snakeEntity) {
-                window.draw(snakeEntity->getSprite());
-            }
+        snake.drawSnake(window);
+        if (snake.eatSnake(food)) {
+            food.respawnFood(); // Respawn food at a new random position
+            // Increase snake size or score as needed
         }
+        window.draw(food.getSprite());
 
        // window.draw(entity.getSprite());
         window.display();

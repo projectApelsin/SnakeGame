@@ -23,6 +23,17 @@ void Grid::initializeGrid() {
     }
 }
 
+void Grid::drawGrid(sf::RenderWindow& window) {
+    
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            sf::Sprite sprite = grid[i][j]->getSprite();
+            sprite.setPosition(j * 50, i * 50); // Adjust position based on your grid cell size
+            window.draw(sprite);
+        }
+    }
+}
+
 const std::vector<std::vector<std::shared_ptr<Entity>>>& Grid::getGrid() const {
     return grid;
 }
