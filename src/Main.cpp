@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Snake.h"
 #include <vector>
+#include "Grid.h"
 
 int main()
 {
@@ -9,7 +10,11 @@ int main()
     Snake snake;
     snake.snakeGrow();
     snake.snakeGrow();
+    const int rows = 16;
+    const int cols = 16;
+    Grid grid(rows, cols);
     
+    grid.initializeGrid();
     while (window.isOpen())
     {
         sf::Event event;
@@ -17,6 +22,15 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+        }
+        
+        const auto& gridData = grid.getGrid();
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                sf::Sprite sprite = gridData[i][j]->getSprite();
+                sprite.setPosition(j * 50, i * 50); // Adjust position based on your grid cell size
+                window.draw(sprite);
+            }
         }
 
         window.clear();
