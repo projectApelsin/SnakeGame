@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="src\Const.cpp" />
     <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\Food.cpp" />
     <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Snake.cpp" />
@@ -142,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="src\Const.h" />
     <ClInclude Include="src\Entity.h" />
+    <ClInclude Include="src\Food.h" />
     <ClInclude Include="src\Grid.h" />
     <ClInclude Include="src\Snake.h" />
   </ItemGroup>

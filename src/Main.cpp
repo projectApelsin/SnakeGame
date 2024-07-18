@@ -3,16 +3,18 @@
 #include "Snake.h"
 #include <vector>
 #include "Grid.h"
+#include "Food.h"
+
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 800), "Snake Online");
     Snake snake;
-    snake.snakeGrow();
-    snake.snakeGrow();
-    const int rows = 16;
-    const int cols = 16;
-    Grid grid(rows, cols);
+    snake.growSnake();
+    snake.growSnake();
+
+    Grid grid(ROWS, COLUMNS);
+    Food food(800,800,10);
     
     grid.initializeGrid();
     while (window.isOpen())
@@ -22,19 +24,20 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-        }
-        window.clear();
-        const auto& gridData = grid.getGrid();
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                sf::Sprite sprite = gridData[i][j]->getSprite();
-                sprite.setPosition(j * 50, i * 50); // Adjust position based on your grid cell size
-                window.draw(sprite);
+            switch (event.type) {
+            
             }
         }
-        for (auto& snakeEntity : snake.getVectorSnake()) {
-            window.draw(snakeEntity.get()->getSprite());
+        window.clear();
+        
+        grid.drawGrid(window);
+        window.draw(food.getSprite());
+        snake.drawSnake(window);
+        if (snake.eatSnake(food)) {
+            food.respawnFood(); // Respawn food at a new random position
+            // Increase snake size or score as needed
         }
+        window.draw(food.getSprite());
 
        // window.draw(entity.getSprite());
         window.display();
