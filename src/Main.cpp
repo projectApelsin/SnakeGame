@@ -1,16 +1,15 @@
 #include <SFML/Graphics.hpp>
 #include "Entity.h"
 #include "Snake.h"
+#include <vector>
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 800), "Snake Online");
-    sf::Sprite sprite;
-    sf::Texture texture;
-    texture.loadFromFile("data/apple.png");
-    Snake snake();
-  
-
+    Snake snake;
+    snake.snakeGrow();
+    snake.snakeGrow();
+    
     while (window.isOpen())
     {
         sf::Event event;
@@ -21,7 +20,11 @@ int main()
         }
 
         window.clear();
-        
+        for (auto& snakeEntity : snake.getVectorSnake()) {
+            window.draw(snakeEntity.get()->getSprite());
+        }
+
+       // window.draw(entity.getSprite());
         window.display();
     }
 

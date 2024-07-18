@@ -1,15 +1,14 @@
 #pragma once
-#include <iostream>
-#include "SFML/Graphics.hpp"
-#include "Entity.h"
 #include <vector>
-#include "Const.h"
+#include <memory>
+#include "Entity.h"
 
 class Snake {
-private:
-	std::vector<Entity> snake;
-	
-
 public:
-	Snake();
+    Snake();
+    std::vector<std::shared_ptr<Entity>>& getVectorSnake();
+    void snakeGrow();
+
+private:
+    std::vector<std::shared_ptr<Entity>> snake;
 };

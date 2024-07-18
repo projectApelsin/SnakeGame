@@ -1,6 +1,18 @@
 #include "Entity.h"
 
-Entity::Entity(std::string& pathToTexture) {
+Entity::Entity(const char* pathToTexture) {
 	texture.loadFromFile(pathToTexture);
 	sprite.setTexture(texture);
+	
+}
+const sf::Sprite& Entity::getSprite() {
+	return sprite;
+}
+
+void Entity::setSpritePosition(const sf::Vector2f& position) {
+	sprite.setPosition(position);
+}
+
+void Entity::setSpriteTexture(const char* pathToTexture) {
+	texture.loadFromFile(pathToTexture);
 }
