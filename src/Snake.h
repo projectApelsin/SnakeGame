@@ -6,13 +6,14 @@
 
 class Snake {
 public:
-    Snake();
+    Snake(Grid& grid);
     std::vector<std::shared_ptr<Entity>>& getVectorSnake();
     void growSnake();
     void drawSnake(sf::RenderWindow& window);
-
+    void moveSnake();
     bool eatSnake(Food& food);
 
 private:
     std::vector<std::shared_ptr<Entity>> snake;
+    Grid* ptrGrid;
 };

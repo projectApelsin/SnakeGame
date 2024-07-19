@@ -12,5 +12,5 @@ private:
 public:
 	Food(Grid& grid);
 	void respawnFood();
-    int test();
+
 };
