@@ -2,16 +2,15 @@
 #include "Entity.h"
 #include "Const.h"
 #include "random"
+#include "Grid.h"
 
 class Food : public Entity {
 private:
-    int windowWidth;
-    int windowHeight;
-    int gridSize;
     std::mt19937 rng;
-    std::uniform_int_distribution<int> xDistribution;
-    std::uniform_int_distribution<int> yDistribution;
+    std::uniform_int_distribution<int> distribution;
+    Grid* ptrGrid;
 public:
-	Food(int windowWidth, int windowHeight, int gridSize);
+	Food(Grid& grid);
 	void respawnFood();
+    int test();
 };

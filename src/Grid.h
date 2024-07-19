@@ -12,6 +12,7 @@ public:
     void initializeGrid();
     const std::vector<std::vector<std::shared_ptr<Entity>>>& getGrid() const;
     void drawGrid(sf::RenderWindow& window);
+    
 
 private:
     int rows;

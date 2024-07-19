@@ -1,17 +1,17 @@
 #include "Food.h"
 
 
-
-Food::Food(int windowWidth, int windowHeight, int gridSize)
-    : Entity(APPLE), windowWidth(windowWidth), windowHeight(windowHeight), gridSize(gridSize),
-    rng(std::random_device{}()),
-    xDistribution(0, (windowWidth / gridSize) - 1), yDistribution(0, (windowHeight / gridSize) - 1) {
+Food::Food(Grid& grid)
+    : Entity(APPLE), rng(std::random_device{}()), distribution(0, 15) { 
+    ptrGrid = &grid;
     respawnFood();
 }
 
 void Food::respawnFood() {
-    int x = xDistribution(rng);
-    int y = yDistribution(rng);
-    setSpritePosition(sf::Vector2f(static_cast<float>(x), static_cast<float>(y)));
-   
+    int x = distribution(rng);
+    int y = distribution(rng);
+    std::cout << x << std::endl << y << std::endl;
+    std::cout << ptrGrid->getGrid()[x][y].get()->getSprite().getPosition().x << std::endl;
+    setSpritePosition(ptrGrid->getGrid()[x][y].get()->getSprite().getPosition());
 }
+

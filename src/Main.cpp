@@ -10,13 +10,10 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 800), "Snake Online");
     Snake snake;
-    snake.growSnake();
-    snake.growSnake();
-
     Grid grid(ROWS, COLUMNS);
-    Food food(800,800,10);
-    
     grid.initializeGrid();
+    Food food(grid);
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -33,10 +30,6 @@ int main()
         grid.drawGrid(window);
         window.draw(food.getSprite());
         snake.drawSnake(window);
-        if (snake.eatSnake(food)) {
-            food.respawnFood(); // Respawn food at a new random position
-            // Increase snake size or score as needed
-        }
         window.draw(food.getSprite());
 
        // window.draw(entity.getSprite());

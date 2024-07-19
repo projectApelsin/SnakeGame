@@ -10,26 +10,24 @@ void Grid::initializeGrid() {
         for (int j = 0; j < cols; ++j) {
             if (isEven) {
                 grid[i][j] = std::make_shared<Entity>(BACKGROUND_GREEN);
+                grid[i][j]->setSpritePosition(sf::Vector2f(j * 50, i * 50));
             }
             else {
                 grid[i][j] = std::make_shared<Entity>(BACKGROUND_LIGHT_GREEN);
+                grid[i][j]->setSpritePosition(sf::Vector2f(j * 50, i * 50));
             }
             isEven = !isEven;
         }
-        // Flip isEven at the end of each row to create a checkerboard pattern
+
         if (cols % 2 == 0) {
             isEven = !isEven;
         }
     }
 }
-
 void Grid::drawGrid(sf::RenderWindow& window) {
-    
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            sf::Sprite sprite = grid[i][j]->getSprite();
-            sprite.setPosition(j * 50, i * 50); // Adjust position based on your grid cell size
-            window.draw(sprite);
+            window.draw(grid[i][j]->getSprite());
         }
     }
 }
@@ -37,3 +35,6 @@ void Grid::drawGrid(sf::RenderWindow& window) {
 const std::vector<std::vector<std::shared_ptr<Entity>>>& Grid::getGrid() const {
     return grid;
 }
+
+
+ 
