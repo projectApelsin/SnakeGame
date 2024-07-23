@@ -1,15 +1,16 @@
 #include "Snake.h"
 
 Snake::Snake(Grid& grid)
-{
-    ptrGrid = &grid;
+    : ptrGrid(&grid), direction(0, 1), globalPosition(4, 2) {
     snake.emplace_back(std::make_shared<Entity>(SNAKE_HEAD_UP));
-    snake[0].get()->setSpritePosition(ptrGrid->getGrid()[4][2].get()->getSprite().getPosition());
-    sf::Vector2f previousSprite = snake.back().get()->getSprite().getPosition();
+    snake[0]->setSpritePosition(ptrGrid->getGrid()[4][2]->getSprite().getPosition());
+    sf::Vector2f previousSprite = snake.back()->getSprite().getPosition();
     snake.emplace_back(std::make_shared<Entity>(SNAKE_TAIL_DOWN));
-    snake.back().get()->setSpritePosition(sf::Vector2f(previousSprite.x, previousSprite.y + 40));
-    direction = sf::Vector2i(0,1);
-    globalPosition = sf::Vector2i(8, 8);
+    snake.back()->setSpritePosition(sf::Vector2f(previousSprite.x, previousSprite.y + 40));
+    
+    // Initialize previous positions
+    previousPositions.push_back(globalPosition);
+    previousPositions.push_back(sf::Vector2i(globalPosition.x, globalPosition.y - 1));
 }
 
 std::vector<std::shared_ptr<Entity>>& Snake::getVectorSnake() {
@@ -19,20 +20,22 @@ std::vector<std::shared_ptr<Entity>>& Snake::getVectorSnake() {
 void Snake::growSnake() {
     std::shared_ptr<Entity> previousSnakeEntity = snake.back();
     snake.emplace_back(std::make_shared<Entity>(SNAKE_TAIL_DOWN));
-    previousSnakeEntity.get()->setSpriteTexture(SNAKE_BODY_VERTICAL);
-    snake.back().get()->setSpritePosition(sf::Vector2f(previousSnakeEntity.get()->getSprite().getPosition().x,
-     previousSnakeEntity.get()->getSprite().getPosition().y + 40));
-
+    previousSnakeEntity->setSpriteTexture(SNAKE_BODY_VERTICAL);
+    snake.back()->setSpritePosition(previousSnakeEntity->getSprite().getPosition());
+    previousPositions.push_back(previousPositions.back()); // Add a new position for the new segment
 }
 
 void Snake::drawSnake(sf::RenderWindow& window) {
     for (auto& snakeEntity : snake) {
-        window.draw(snakeEntity.get()->getSprite());
+        window.draw(snakeEntity->getSprite());
     }
 }
 
 void Snake::setDirection(const sf::Vector2i& otherDirection) {
-    direction = otherDirection;
+    // Prevent the snake from reversing
+    if (direction.x != -otherDirection.x && direction.y != -otherDirection.y) {
+        direction = otherDirection;
+    }
 }
 
 const sf::Vector2i& Snake::getDirection() {
@@ -40,22 +43,84 @@ const sf::Vector2i& Snake::getDirection() {
 }
 
 void Snake::moveSnake() {
-    // direction
-    snake[0].get()->setSpritePosition(ptrGrid->getGrid()[globalPosition.x + direction.x][globalPosition.y + direction.y].get()->getSprite().getPosition());
-    globalPosition += direction;
-    sf::Vector2i previousPosition(globalPosition);
-    for (int i = 1; i < snake.size(); i++) {
-        snake[i].get()->setSpritePosition(sf::Vector2f(ptrGrid->getGrid()[previousPosition.x - direction.x][previousPosition.y - direction.y].get()->getSprite().getPosition().x,
-            ptrGrid->getGrid()[previousPosition.x - direction.x][previousPosition.y - direction.y].get()->getSprite().getPosition().y));
-        previousPosition = sf::Vector2i(previousPosition.x - direction.x, previousPosition.y - direction.y);
+    // Update previous positions
+    for (int i = snake.size() - 1; i > 0; --i) {
+        previousPositions[i] = previousPositions[i - 1];
+        snake[i]->setSpritePosition(ptrGrid->getGrid()[previousPositions[i].x][previousPositions[i].y]->getSprite().getPosition());
     }
-    std::cout << snake[0].get()->getSprite().getPosition().x << " " << snake[0].get()->getSprite().getPosition().y << std::endl;
+
+    // Update the head position
+    globalPosition += direction;
+    previousPositions[0] = globalPosition;
+    snake[0]->setSpritePosition(ptrGrid->getGrid()[globalPosition.x][globalPosition.y]->getSprite().getPosition());
+
+    updateTextures();
+
+    std::cout << snake[0]->getSprite().getPosition().x << " " << snake[0]->getSprite().getPosition().y << std::endl;
+}
+void Snake::updateTextures() {
+    // Update the head texture based on direction
+    if (direction == sf::Vector2i(0, 1)) {
+        snake[0]->setSpriteTexture(SNAKE_HEAD_RIGHT);
+    }
+    else if (direction == sf::Vector2i(0, -1)) {
+        snake[0]->setSpriteTexture(SNAKE_HEAD_LEFT);
+    }
+    else if (direction == sf::Vector2i(1, 0)) {
+        snake[0]->setSpriteTexture(SNAKE_HEAD_DOWN);
+    }
+    else if (direction == sf::Vector2i(-1, 0)) {
+        snake[0]->setSpriteTexture(SNAKE_HEAD_UP);
+    }
+
+    // Update the tail texture based on the second last segment's direction
+    sf::Vector2i tailDirection = previousPositions[previousPositions.size() - 2] - previousPositions.back();
+    if (tailDirection == sf::Vector2i(0, -1)) {
+        snake.back()->setSpriteTexture(SNAKE_TAIL_RIGHT);
+    }
+    else if (tailDirection == sf::Vector2i(0, 1)) {
+        snake.back()->setSpriteTexture(SNAKE_TAIL_LEFT);
+    }
+    else if (tailDirection == sf::Vector2i(-1, 0)) {
+        snake.back()->setSpriteTexture(SNAKE_TAIL_DOWN);
+    }
+    else if (tailDirection == sf::Vector2i(1, 0)) {
+        snake.back()->setSpriteTexture(SNAKE_TAIL_UP);
+    }
+    
+    // Update the body textures based on segment directions
+    for (int i = 1; i < snake.size() -1; i++) {
+        sf::Vector2i prevSegmentDirection = previousPositions[i - 1] - previousPositions[i];
+        sf::Vector2i nextSegmentDirection = previousPositions[i] - previousPositions[i + 1];
+
+        if (nextSegmentDirection == sf::Vector2i(1, 0) || nextSegmentDirection == sf::Vector2i(-1, 0)) {
+            snake[i].get()->setSpriteTexture(SNAKE_BODY_VERTICAL);
+        }
+        if (nextSegmentDirection == sf::Vector2i(0, 1) || nextSegmentDirection == sf::Vector2i(0, -1)) {
+            snake[i].get()->setSpriteTexture(SNAKE_BODY_HORIZONTAL);
+        }
+        if (prevSegmentDirection == sf::Vector2i(1, 0) && nextSegmentDirection == sf::Vector2i(0, -1)) {
+            snake[i].get()->setSpriteTexture(SNAKE_BODY_BOTTOM_RIGHT);
+        }
+        else if (prevSegmentDirection == sf::Vector2i(1, 0) && nextSegmentDirection == sf::Vector2i(0, 1)) {
+            snake[i].get()->setSpriteTexture(SNAKE_BODY_BOTTOM_LEFT);
+        }
+        if (prevSegmentDirection == sf::Vector2i(0, 1) && nextSegmentDirection == sf::Vector2i(-1, 0)) {
+            snake[i].get()->setSpriteTexture(SNAKE_BODY_BOTTOM_RIGHT);
+        }
+        if (prevSegmentDirection == sf::Vector2i(0, 1) && nextSegmentDirection == sf::Vector2i(1, 0)) {
+            snake[i].get()->setSpriteTexture(SNAKE_BODY_BOTTOM_LEFT);
+        }
+        
+        
+        
+    }
 }
 
 bool Snake::eatSnake(Food& food) {
-    if (snake[0].get()->getSprite().getGlobalBounds().intersects(food.getSprite().getGlobalBounds())) {
+    if (snake[0]->getSprite().getGlobalBounds().intersects(food.getSprite().getGlobalBounds())) {
         growSnake();
         return true;
     }
-    else return false;
+    return false;
 }

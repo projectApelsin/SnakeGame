@@ -15,8 +15,6 @@ int main()
     Food food(grid);
     sf::Clock clock;
     sf::Sprite sprite;
-    snake.growSnake();
-    snake.growSnake();
     const sf::Time timePerFrame = sf::seconds(1.0f);
     while (window.isOpen()) {
         sf::Event event;
@@ -51,7 +49,7 @@ int main()
             snake.moveSnake();
             clock.restart();
         }
-
+        food.respawnFood(snake.eatSnake(food));
         window.clear();
         grid.drawGrid(window);
         window.draw(food.getSprite());
