@@ -11,6 +11,6 @@ private:
     Grid* ptrGrid;
 public:
 	Food(Grid& grid);
-	void respawnFood();
+	void respawnFood(bool isEaten);
 
 };

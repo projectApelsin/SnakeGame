@@ -20,4 +20,5 @@ private:
     Grid* ptrGrid;
     sf::Vector2i globalPosition;
     sf::Vector2i direction;
+    std::vector<sf::Vector2i> previousPositions;
 };

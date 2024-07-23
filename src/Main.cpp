@@ -8,7 +8,7 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 800), "Snake Online");
+    sf::RenderWindow window(sf::VideoMode(640, 640), "Snake Online");
     Grid grid(ROWS, COLUMNS);
     grid.initializeGrid();
     Snake snake(grid);
@@ -17,7 +17,7 @@ int main()
     sf::Sprite sprite;
     snake.growSnake();
     snake.growSnake();
-    const sf::Time timePerFrame = sf::seconds(1.0f);
+    const sf::Time timePerFrame = sf::seconds(0.5f);
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -51,6 +51,8 @@ int main()
             snake.moveSnake();
             clock.restart();
         }
+
+        food.respawnFood(snake.eatSnake(food));
 
         window.clear();
         grid.drawGrid(window);

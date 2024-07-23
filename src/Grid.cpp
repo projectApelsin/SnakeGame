@@ -10,11 +10,11 @@ void Grid::initializeGrid() {
         for (int j = 0; j < cols; ++j) {
             if (isEven) {
                 grid[i][j] = std::make_shared<Entity>(BACKGROUND_GREEN);
-                grid[i][j]->setSpritePosition(sf::Vector2f(j * 50, i * 50));
+                grid[i][j]->setSpritePosition(sf::Vector2f(j * 40, i * 40));
             }
             else {
                 grid[i][j] = std::make_shared<Entity>(BACKGROUND_LIGHT_GREEN);
-                grid[i][j]->setSpritePosition(sf::Vector2f(j * 50, i * 50));
+                grid[i][j]->setSpritePosition(sf::Vector2f(j * 40, i * 40));
             }
             isEven = !isEven;
         }
