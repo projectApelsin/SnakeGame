@@ -4,7 +4,7 @@
 Food::Food(Grid& grid)
     : Entity(APPLE), rng(std::random_device{}()), distribution(0, 15) { 
     ptrGrid = &grid;
-    
+    respawnFood(true);
 }
 
 void Food::respawnFood(bool isEaten) {

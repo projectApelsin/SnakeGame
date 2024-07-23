@@ -1,5 +1,6 @@
 #pragma once
 
+
 extern const char* SNAKE_HEAD_UP;
 extern const char* SNAKE_HEAD_DOWN;
 extern const char* SNAKE_HEAD_LEFT;
