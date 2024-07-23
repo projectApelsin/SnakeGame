@@ -29,21 +29,25 @@ int main()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
             if (snake.getDirection().x == 0) {
                 snake.setDirection(sf::Vector2i(-1, 0));
+
             }
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
             if (snake.getDirection().x == 0) {
                 snake.setDirection(sf::Vector2i(1, 0));
+
             }
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             if (snake.getDirection().y == 0) {
                 snake.setDirection(sf::Vector2i(0, -1));
+
             }
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             if (snake.getDirection().y == 0) {
                 snake.setDirection(sf::Vector2i(0, 1));
+
             }
         }
 

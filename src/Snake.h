@@ -14,6 +14,7 @@ public:
     bool eatSnake(Food& food);
     void setDirection(const sf::Vector2i& otherDirection);
     const sf::Vector2i& getDirection();
+    void updateTextures();
 
 private:
     std::vector<std::shared_ptr<Entity>> snake;
