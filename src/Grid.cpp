@@ -27,7 +27,7 @@ void Grid::initializeGrid() {
 void Grid::drawGrid(sf::RenderWindow& window) {
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            window.draw(grid[i][j]->getSprite());   
+            window.draw(grid[i][j]->getSprite());
         }
     }
 }
@@ -35,6 +35,3 @@ void Grid::drawGrid(sf::RenderWindow& window) {
 const std::vector<std::vector<std::shared_ptr<Entity>>>& Grid::getGrid() const {
     return grid;
 }
-
-
- 

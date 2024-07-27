@@ -1,11 +1,12 @@
 #include "Entity.h"
 
-Entity::Entity(const char* pathToTexture) {
+Entity::Entity(const char* pathToTexture)
+{
 	texture.loadFromFile(pathToTexture);
 	sprite.setTexture(texture);
-	
 }
-const sf::Sprite& Entity::getSprite() {
+
+const sf::Sprite& Entity::getSprite() const{
 	return sprite;
 }
 

@@ -8,7 +8,7 @@ class Food : public Entity {
 private:
     std::mt19937 rng;
     std::uniform_int_distribution<int> distribution;
-    Grid* ptrGrid;
+    Grid& grid;
 public:
 	Food(Grid& grid);
 	void respawnFood(bool isEaten);

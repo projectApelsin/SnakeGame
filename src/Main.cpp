@@ -8,14 +8,14 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 800), "Snake Online");
+    sf::RenderWindow window(sf::VideoMode(640, 640), "Snake Online");
     Grid grid(ROWS, COLUMNS);
     grid.initializeGrid();
     Snake snake(grid);
     Food food(grid);
     sf::Clock clock;
     sf::Sprite sprite;
-    const sf::Time timePerFrame = sf::seconds(1.0f);
+    const sf::Time timePerFrame = sf::seconds(0.5f);
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
