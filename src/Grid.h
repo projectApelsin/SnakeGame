@@ -12,6 +12,8 @@ public:
     void initializeGrid();
     const std::vector<std::vector<std::shared_ptr<Entity>>>& getGrid() const;
     void drawGrid(sf::RenderWindow& window);
+    const sf::Vector2f getStartPosition() const;
+    const sf::Vector2f getPositionByIndex(int x, int y) const;
     
 
 private:

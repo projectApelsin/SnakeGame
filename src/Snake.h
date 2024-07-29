@@ -16,13 +16,18 @@ public:
     bool eatSnake(Food& food);
     std::vector<std::unique_ptr<Entity>>& getVectorSnake() ;
     void updateTextures();
+    void update(float deltaTime);
+    bool isGameOver() const;
 
 private:
     void growSnake();
+    bool checkSelfCollision();
 
     Grid& grid;
     std::vector<std::unique_ptr<Entity>> snake;
     sf::Vector2i direction;
     std::vector<sf::Vector2i> previousPositions;
     sf::Vector2i globalPosition;
+    std::vector<sf::Vector2f> targetPositions;
+    bool gameOver;
 };

@@ -17,4 +17,5 @@ public:
 	const sf::Sprite& getSprite() const;
 	void setSpritePosition(const sf::Vector2f& position);
 	void setSpriteTexture(const char* pathToTexture);
+	void updatePosition(sf::Vector2f& positionIndex);
 };

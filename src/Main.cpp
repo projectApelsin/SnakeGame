@@ -5,9 +5,7 @@
 #include "Grid.h"
 #include "Food.h"
 
-
-int main()
-{
+int main() {
     sf::RenderWindow window(sf::VideoMode(640, 640), "Snake Online");
     Grid grid(ROWS, COLUMNS);
     grid.initializeGrid();
@@ -16,6 +14,9 @@ int main()
     sf::Clock clock;
     sf::Sprite sprite;
     const sf::Time timePerFrame = sf::seconds(0.5f);
+
+    sf::Clock deltaClock; 
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -49,12 +50,19 @@ int main()
             snake.moveSnake();
             clock.restart();
         }
+
+        float deltaTime = deltaClock.restart().asSeconds();
+        snake.update(deltaTime); 
+        if (snake.isGameOver()) {
+            window.close(); 
+        }
+
+
         food.respawnFood(snake.eatSnake(food));
         window.clear();
         grid.drawGrid(window);
         window.draw(food.getSprite());
         snake.drawSnake(window);
-        window.draw(food.getSprite());
         window.display();
     }
 

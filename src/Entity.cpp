@@ -17,3 +17,7 @@ void Entity::setSpritePosition(const sf::Vector2f& position) {
 void Entity::setSpriteTexture(const char* pathToTexture) {
 	texture.loadFromFile(pathToTexture);
 }
+
+void Entity::updatePosition(sf::Vector2f& otherPosition) {
+	sprite.setPosition(sprite.getPosition().x + otherPosition.x, sprite.getPosition().y + otherPosition.y);
+}
