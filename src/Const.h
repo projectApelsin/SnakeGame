@@ -19,6 +19,7 @@ extern const char* SNAKE_TAIL_DOWN;
 extern const char* BACKGROUND_GREEN;
 extern const char* BACKGROUND_LIGHT_GREEN;
 extern const char* APPLE;
+extern const char* GAMEOVER;
 
 extern const int ROWS;
 extern const int COLUMNS;

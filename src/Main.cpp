@@ -13,6 +13,12 @@ int main() {
     Food food(grid);
     sf::Clock clock;
     sf::Sprite sprite;
+    sf::Sprite gameOver;
+    sf::Texture gameOverTexture;
+    gameOverTexture.loadFromFile(GAMEOVER);
+    gameOver.setTexture(gameOverTexture);
+    gameOver.setPosition(100, 100);
+    gameOver.setScale(sf::Vector2f(0.4,0.4));
     const sf::Time timePerFrame = sf::seconds(0.5f);
 
     sf::Clock deltaClock; 
@@ -53,16 +59,18 @@ int main() {
 
         float deltaTime = deltaClock.restart().asSeconds();
         snake.update(deltaTime); 
-        if (snake.isGameOver()) {
-            window.close(); 
-        }
 
 
         food.respawnFood(snake.eatSnake(food));
         window.clear();
+
         grid.drawGrid(window);
         window.draw(food.getSprite());
         snake.drawSnake(window);
+        if (snake.isGameOver()) {
+
+            window.draw(gameOver);
+        }
         window.display();
     }
 

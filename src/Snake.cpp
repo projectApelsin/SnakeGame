@@ -97,6 +97,7 @@ void Snake::moveSnake() {
         gameOver = true;
     }
     updateTextures();
+    
 }
 
 void Snake::updateTextures() {
