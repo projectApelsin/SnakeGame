@@ -36,11 +36,11 @@ const std::vector<std::vector<std::shared_ptr<Entity>>>& Grid::getGrid() const {
     return grid;
 }
 
-const sf::Vector2f Grid::getStartPosition() const
+const sf::Vector2f& Grid::getStartPosition() const
 {
     return grid[4][2]->getSprite().getPosition();
 }
 
-const sf::Vector2f Grid::getPositionByIndex(int x, int y) const {
+const sf::Vector2f& Grid::getPositionByIndex(int x, int y) const {
     return grid[x][y]->getSprite().getPosition();
 }

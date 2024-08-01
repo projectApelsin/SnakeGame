@@ -9,7 +9,7 @@
 class Entity {
 private:
 	sf::Sprite sprite;
-	sf::Texture texture;;
+	sf::Texture texture;
 
 public:
 	Entity(const char* pathToTexture);
@@ -17,5 +17,5 @@ public:
 	const sf::Sprite& getSprite() const;
 	void setSpritePosition(const sf::Vector2f& position);
 	void setSpriteTexture(const char* pathToTexture);
-	void updatePosition(sf::Vector2f& positionIndex);
+	void updatePosition(const sf::Vector2f& positionIndex);
 };
